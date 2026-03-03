@@ -4,83 +4,103 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Comp Recruiting Pipeline</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0f1117;
-    --surface: #1a1d27;
-    --surface2: #242836;
-    --border: #2e3345;
-    --text: #e4e7ef;
-    --text2: #8b90a0;
+    --bg: #f5f6fa;
+    --surface: #ffffff;
+    --surface2: #f0f1f5;
+    --border: #e2e4ec;
+    --text: #1a1d2e;
+    --text2: #6b7084;
     --accent: #6c5ce7;
-    --accent2: #a29bfe;
-    --green: #00b894;
-    --green-bg: rgba(0,184,148,.12);
-    --red: #e17055;
-    --red-bg: rgba(225,112,85,.12);
-    --yellow: #fdcb6e;
-    --yellow-bg: rgba(253,203,110,.12);
-    --blue: #74b9ff;
+    --accent2: #5a4bd1;
+    --green: #00a67e;
+    --green-bg: rgba(0,166,126,.08);
+    --green-border: rgba(0,166,126,.3);
+    --red: #dc3545;
+    --red-bg: rgba(220,53,69,.06);
+    --red-border: rgba(220,53,69,.3);
+    --yellow: #e0a800;
+    --yellow-bg: rgba(224,168,0,.08);
+    --yellow-border: rgba(224,168,0,.3);
+    --blue: #2d7ff9;
+    --shadow: 0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
+    --shadow-hover: 0 4px 12px rgba(0,0,0,.08), 0 2px 4px rgba(0,0,0,.04);
   }
   * { margin:0; padding:0; box-sizing:border-box; }
   body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
 
   /* Header */
-  .header { padding: 32px 40px 24px; border-bottom: 1px solid var(--border); }
-  .header-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+  .header { padding: 28px 40px 22px; background: var(--surface); border-bottom: 1px solid var(--border); box-shadow: var(--shadow); }
+  .header-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
   .logo { display: flex; align-items: center; gap: 12px; }
   .logo-icon { width: 36px; height: 36px; background: var(--accent); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 16px; color: #fff; }
-  .logo h1 { font-size: 20px; font-weight: 600; }
+  .logo h1 { font-size: 20px; font-weight: 700; color: var(--text); }
   .logo h1 span { color: var(--text2); font-weight: 400; font-size: 14px; margin-left: 8px; }
-  .meta-info { font-size: 13px; color: var(--text2); }
+  .meta-info { font-size: 13px; color: var(--text2); display: flex; align-items: center; gap: 8px; }
+  .sync-status { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+  .sync-status.ok { background: var(--green); }
+  .sync-status.offline { background: var(--yellow); }
+  .sync-status.error { background: var(--red); }
 
   /* Stats bar */
-  .stats { display: flex; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
-  .stat { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px 20px; min-width: 130px; }
+  .stats { display: flex; gap: 12px; margin-bottom: 18px; flex-wrap: wrap; }
+  .stat { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px 22px; min-width: 130px; box-shadow: var(--shadow); }
   .stat-value { font-size: 28px; font-weight: 700; }
-  .stat-label { font-size: 12px; color: var(--text2); margin-top: 2px; }
+  .stat-label { font-size: 12px; color: var(--text2); margin-top: 2px; text-transform: uppercase; letter-spacing: .4px; }
   .stat.green .stat-value { color: var(--green); }
   .stat.red .stat-value { color: var(--red); }
   .stat.yellow .stat-value { color: var(--yellow); }
 
   /* Filters */
-  .filters { display: flex; gap: 8px; flex-wrap: wrap; }
-  .filter-btn { padding: 8px 16px; border-radius: 20px; border: 1px solid var(--border); background: transparent; color: var(--text2); cursor: pointer; font-size: 13px; transition: all .2s; }
-  .filter-btn:hover { border-color: var(--accent); color: var(--text); }
+  .filters { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  .filter-btn { padding: 8px 16px; border-radius: 20px; border: 1px solid var(--border); background: var(--surface); color: var(--text2); cursor: pointer; font-size: 13px; font-weight: 500; transition: all .2s; }
+  .filter-btn:hover { border-color: var(--accent); color: var(--accent); }
   .filter-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .export-btn { margin-left: auto; border-color: var(--accent); color: var(--accent); font-weight: 600; }
+  .export-btn:hover { background: var(--accent); color: #fff; }
+
+  /* Setup banner */
+  .setup-banner { background: var(--yellow-bg); border: 1px solid var(--yellow-border); border-radius: 12px; padding: 16px 24px; margin: 20px 40px 0; font-size: 13px; line-height: 1.6; }
+  .setup-banner strong { color: var(--text); }
+  .setup-banner code { background: var(--surface2); padding: 2px 6px; border-radius: 4px; font-size: 12px; }
+  .setup-banner a { color: var(--accent); }
 
   /* Main content */
-  .main { padding: 24px 40px; }
+  .main { padding: 28px 40px; max-width: 1400px; margin: 0 auto; }
   .vaga-section { margin-bottom: 36px; }
-  .vaga-title { font-size: 16px; font-weight: 600; margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
-  .vaga-count { background: var(--surface2); padding: 2px 10px; border-radius: 12px; font-size: 12px; color: var(--text2); }
+  .vaga-title { font-size: 16px; font-weight: 700; margin-bottom: 14px; display: flex; align-items: center; gap: 10px; color: var(--text); }
+  .vaga-count { background: var(--accent); padding: 2px 10px; border-radius: 12px; font-size: 12px; color: #fff; font-weight: 600; }
 
   /* Cards grid */
-  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 14px; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 16px; }
 
   /* Card */
-  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 20px; transition: all .2s; position: relative; }
-  .card:hover { border-color: var(--accent); transform: translateY(-1px); }
-  .card.aprovado { border-left: 3px solid var(--green); }
-  .card.descartado { border-left: 3px solid var(--red); opacity: .5; }
-  .card.talvez { border-left: 3px solid var(--yellow); }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 22px; transition: all .2s; position: relative; box-shadow: var(--shadow); display: flex; flex-direction: column; }
+  .card:hover { box-shadow: var(--shadow-hover); transform: translateY(-1px); }
+  .card.aprovado { border-left: 4px solid var(--green); background: linear-gradient(135deg, var(--green-bg), var(--surface)); }
+  .card.descartado { border-left: 4px solid var(--red); opacity: .55; }
+  .card.talvez { border-left: 4px solid var(--yellow); background: linear-gradient(135deg, var(--yellow-bg), var(--surface)); }
 
   .card-top { display: flex; gap: 14px; align-items: flex-start; }
   .avatar { width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 16px; color: #fff; flex-shrink: 0; }
-  .card-info { flex: 1; min-width: 0; }
-  .card-name { font-size: 15px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+  .card-info { flex: 1; min-width: 0; padding-right: 44px; }
+  .card-name { font-size: 15px; font-weight: 600; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
   .card-name a { color: var(--text); text-decoration: none; }
-  .card-name a:hover { color: var(--accent2); }
-  .linkedin-icon { width: 16px; height: 16px; opacity: .6; }
-  .linkedin-icon:hover { opacity: 1; }
-  .card-headline { font-size: 13px; color: var(--text2); margin-top: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .card-empresa { font-size: 13px; color: var(--blue); margin-top: 2px; }
+  .card-name a:hover { color: var(--accent); }
+  .linkedin-icon { width: 16px; height: 16px; color: var(--blue); }
+  .linkedin-icon:hover { color: var(--accent); }
+  .no-url { font-size: 11px; color: var(--red); }
+  .card-headline { font-size: 13px; color: var(--text2); margin-top: 4px; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; line-height: 1.4; }
+  .card-empresa { font-size: 13px; color: var(--blue); margin-top: 3px; font-weight: 500; }
 
   /* Score badge */
-  .score { position: absolute; top: 16px; right: 16px; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 15px; }
-  .score.high { background: var(--green-bg); color: var(--green); border: 2px solid var(--green); }
-  .score.mid { background: var(--yellow-bg); color: var(--yellow); border: 2px solid var(--yellow); }
-  .score.low { background: var(--red-bg); color: var(--red); border: 2px solid var(--red); }
+  .score { position: absolute; top: 18px; right: 18px; width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 16px; }
+  .score.high { background: var(--green-bg); color: var(--green); border: 2px solid var(--green-border); }
+  .score.mid { background: var(--yellow-bg); color: var(--yellow); border: 2px solid var(--yellow-border); }
+  .score.low { background: var(--red-bg); color: var(--red); border: 2px solid var(--red-border); }
 
   /* Details */
   .card-details { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 12px; color: var(--text2); }
@@ -88,42 +108,52 @@
 
   /* Skills */
   .skills { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px; }
-  .skill-tag { padding: 3px 10px; border-radius: 12px; background: var(--surface2); font-size: 11px; color: var(--text2); border: 1px solid var(--border); }
+  .skill-tag { padding: 3px 10px; border-radius: 12px; background: var(--surface2); font-size: 11px; color: var(--text2); border: 1px solid var(--border); font-weight: 500; }
 
   /* Justificativa */
-  .justificativa { margin-top: 12px; font-size: 12px; color: var(--text2); line-height: 1.5; background: var(--surface2); padding: 10px 12px; border-radius: 8px; display: none; }
+  .justificativa { margin-top: 12px; font-size: 12px; color: var(--text2); line-height: 1.6; background: var(--surface2); padding: 12px 14px; border-radius: 8px; display: none; border: 1px solid var(--border); }
   .card.expanded .justificativa { display: block; }
-  .expand-btn { background: none; border: none; color: var(--accent2); font-size: 12px; cursor: pointer; margin-top: 8px; padding: 0; }
+  .expand-btn { background: none; border: none; color: var(--accent); font-size: 12px; cursor: pointer; margin-top: 10px; padding: 0; font-weight: 500; }
   .expand-btn:hover { text-decoration: underline; }
 
   /* Actions */
   .card-actions { display: flex; gap: 6px; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border); }
-  .action-btn { flex: 1; padding: 8px; border-radius: 8px; border: 1px solid var(--border); background: transparent; color: var(--text2); cursor: pointer; font-size: 12px; font-weight: 500; transition: all .15s; }
+  .action-btn { flex: 1; padding: 9px; border-radius: 8px; border: 1.5px solid var(--border); background: var(--surface); color: var(--text2); cursor: pointer; font-size: 12px; font-weight: 600; transition: all .15s; }
   .action-btn:hover { color: var(--text); }
-  .action-btn.approve { border-color: var(--green); color: var(--green); }
+  .action-btn.approve { border-color: var(--green-border); color: var(--green); }
   .action-btn.approve:hover { background: var(--green-bg); }
-  .action-btn.approve.selected { background: var(--green); color: #fff; }
-  .action-btn.reject { border-color: var(--red); color: var(--red); }
+  .action-btn.approve.selected { background: var(--green); color: #fff; border-color: var(--green); }
+  .action-btn.reject { border-color: var(--red-border); color: var(--red); }
   .action-btn.reject:hover { background: var(--red-bg); }
-  .action-btn.reject.selected { background: var(--red); color: #fff; }
-  .action-btn.maybe { border-color: var(--yellow); color: var(--yellow); }
+  .action-btn.reject.selected { background: var(--red); color: #fff; border-color: var(--red); }
+  .action-btn.maybe { border-color: var(--yellow-border); color: var(--yellow); }
   .action-btn.maybe:hover { background: var(--yellow-bg); }
-  .action-btn.maybe.selected { background: var(--yellow); color: #000; }
+  .action-btn.maybe.selected { background: var(--yellow); color: #fff; border-color: var(--yellow); }
+  .action-btn.notes-toggle { max-width: 42px; font-size: 15px; color: var(--text2); }
+  .action-btn.notes-toggle:hover { color: var(--accent); border-color: var(--accent); }
 
   /* Notes input */
-  .notes-row { margin-top: 10px; display: none; }
+  .notes-row { margin-top: 10px; display: none; gap: 6px; }
   .card.show-notes .notes-row { display: flex; }
-  .notes-input { flex: 1; background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 8px 12px; color: var(--text); font-size: 12px; font-family: inherit; resize: none; }
-  .notes-input:focus { outline: none; border-color: var(--accent); }
-  .notes-save { padding: 8px 14px; background: var(--accent); border: none; border-radius: 8px; color: #fff; font-size: 12px; cursor: pointer; margin-left: 6px; }
+  .notes-input { flex: 1; background: var(--surface2); border: 1.5px solid var(--border); border-radius: 8px; padding: 10px 12px; color: var(--text); font-size: 13px; font-family: inherit; resize: vertical; min-height: 44px; }
+  .notes-input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(108,92,231,.12); }
+  .notes-save { padding: 10px 16px; background: var(--accent); border: none; border-radius: 8px; color: #fff; font-size: 12px; font-weight: 600; cursor: pointer; white-space: nowrap; }
+  .notes-save:hover { background: var(--accent2); }
 
   /* Toast */
-  .toast { position: fixed; bottom: 24px; right: 24px; background: var(--surface2); border: 1px solid var(--border); padding: 14px 24px; border-radius: 12px; font-size: 13px; transform: translateY(80px); opacity: 0; transition: all .3s; z-index: 100; }
+  .toast { position: fixed; bottom: 24px; right: 24px; background: var(--text); color: #fff; padding: 14px 24px; border-radius: 12px; font-size: 13px; font-weight: 500; transform: translateY(80px); opacity: 0; transition: all .3s; z-index: 100; box-shadow: 0 8px 24px rgba(0,0,0,.2); }
   .toast.show { transform: translateY(0); opacity: 1; }
+
+  /* Empty state */
+  .empty-state { text-align: center; padding: 60px 20px; color: var(--text2); }
+  .empty-state p { font-size: 15px; }
+
+  /* Saving indicator */
+  .saving { pointer-events: none; opacity: .7; }
 
   /* Responsive */
   @media (max-width: 768px) {
-    .header, .main { padding-left: 16px; padding-right: 16px; }
+    .header, .main, .setup-banner { padding-left: 16px; padding-right: 16px; }
     .cards { grid-template-columns: 1fr; }
     .stats { gap: 8px; }
     .stat { min-width: 100px; padding: 10px 14px; }
@@ -144,15 +174,26 @@
   <div class="filters" id="filters"></div>
 </div>
 
+<div id="setupBanner"></div>
 <div class="main" id="main"></div>
-
 <div class="toast" id="toast"></div>
 
 <script>
-const AVATAR_COLORS = ['#6c5ce7','#00b894','#e17055','#74b9ff','#a29bfe','#fdcb6e','#ff7675','#55efc4','#81ecec','#fab1a0','#ffeaa7','#dfe6e9'];
+// =============================================
+// CONFIGURACAO JSONBIN - PREENCHER AQUI
+// =============================================
+const JSONBIN_CONFIG = {
+  BIN_ID: '69a713f243b1c97be9afc4da',
+  API_KEY: '$2a$10$bzYO/tczELotvLuQGO.Cz.CY88fJVt1W4LnSXatyuX7vWAhWTlivm',
+};
+// =============================================
+
+const AVATAR_COLORS = ['#6c5ce7','#00b894','#e17055','#2d7ff9','#a29bfe','#e0a800','#ff7675','#20bf6b','#45aaf2','#fa8231','#778ca3','#4b7bec'];
 let data = null;
 let activeFilter = 'all';
 let decisions = {};
+let cloudConnected = false;
+let saveTimeout = null;
 
 function getInitials(name) {
   return name.split(' ').filter(Boolean).map(w => w[0]).slice(0,2).join('').toUpperCase();
@@ -171,22 +212,118 @@ function showToast(msg) {
   setTimeout(() => t.classList.remove('show'), 2500);
 }
 
-function saveDecisions() {
-  localStorage.setItem('comp_decisions', JSON.stringify(decisions));
+// =============================================
+// PERSISTENCIA: JSONBin (cloud) + localStorage (fallback)
+// =============================================
+
+function isJsonBinConfigured() {
+  return JSONBIN_CONFIG.BIN_ID && JSONBIN_CONFIG.API_KEY;
 }
-function loadDecisions() {
+
+async function loadDecisionsFromCloud() {
+  if (!isJsonBinConfigured()) return false;
+  try {
+    const resp = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_CONFIG.BIN_ID}/latest`, {
+      headers: { 'X-Access-Key': JSONBIN_CONFIG.API_KEY }
+    });
+    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+    const json = await resp.json();
+    decisions = json.record || {};
+    cloudConnected = true;
+    // Sync to localStorage as backup
+    localStorage.setItem('comp_decisions', JSON.stringify(decisions));
+    return true;
+  } catch(e) {
+    console.warn('JSONBin read failed, using localStorage:', e);
+    cloudConnected = false;
+    return false;
+  }
+}
+
+async function saveDecisionsToCloud() {
+  if (!isJsonBinConfigured()) return false;
+  try {
+    const resp = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_CONFIG.BIN_ID}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Access-Key': JSONBIN_CONFIG.API_KEY
+      },
+      body: JSON.stringify(decisions)
+    });
+    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+    cloudConnected = true;
+    updateSyncStatus();
+    return true;
+  } catch(e) {
+    console.warn('JSONBin write failed:', e);
+    cloudConnected = false;
+    updateSyncStatus();
+    return false;
+  }
+}
+
+function saveDecisions() {
+  // Always save to localStorage immediately
+  localStorage.setItem('comp_decisions', JSON.stringify(decisions));
+  // Debounce cloud save (wait 1s after last change to batch)
+  if (saveTimeout) clearTimeout(saveTimeout);
+  saveTimeout = setTimeout(async () => {
+    if (isJsonBinConfigured()) {
+      await saveDecisionsToCloud();
+    }
+  }, 1000);
+}
+
+function loadDecisionsFromLocal() {
   try {
     const saved = localStorage.getItem('comp_decisions');
     if (saved) decisions = JSON.parse(saved);
   } catch(e) {}
 }
 
+function updateSyncStatus() {
+  const el = document.getElementById('metaInfo');
+  if (!el || !data) return;
+  const statusClass = !isJsonBinConfigured() ? 'offline' : cloudConnected ? 'ok' : 'error';
+  const statusText = !isJsonBinConfigured() ? 'local' : cloudConnected ? 'sincronizado' : 'offline';
+  el.innerHTML = `Atualizado: ${data.meta.ultima_atualizacao} &nbsp;<span class="sync-status ${statusClass}"></span> ${statusText}`;
+}
+
+function showSetupBanner() {
+  const banner = document.getElementById('setupBanner');
+  if (isJsonBinConfigured()) {
+    banner.innerHTML = '';
+    return;
+  }
+  banner.innerHTML = `
+    <div class="setup-banner">
+      <strong>Modo local</strong> — As decisoes estao salvas apenas neste navegador.<br>
+      Para salvar na nuvem (acessivel de qualquer lugar), configure o JSONBin em 3 passos:<br>
+      1. Crie uma conta gratis em <a href="https://jsonbin.io" target="_blank">jsonbin.io</a><br>
+      2. Crie um novo bin com o conteudo <code>{}</code> e copie o <strong>Bin ID</strong><br>
+      3. Va em API Keys, copie sua <strong>Access Key</strong>, e preencha no topo do arquivo <code>index.html</code>
+    </div>
+  `;
+}
+
+// =============================================
+// DECISOES E NOTAS
+// =============================================
+
 function setDecision(id, decision) {
-  decisions[id] = decisions[id] || {};
-  decisions[id].decisao = decision;
+  const current = decisions[id] && decisions[id].decisao;
+  if (current === decision) {
+    decisions[id].decisao = 'Pendente';
+  } else {
+    decisions[id] = decisions[id] || {};
+    decisions[id].decisao = decision;
+  }
   saveDecisions();
   render();
-  showToast(`${data.candidatos.find(c=>c.id===id).nome} → ${decision}`);
+  const nome = data.candidatos.find(c=>c.id===id).nome;
+  const final = (decisions[id] && decisions[id].decisao) || 'Pendente';
+  showToast(`${nome} → ${final}`);
 }
 
 function saveNote(id) {
@@ -205,6 +342,10 @@ function getNote(c) {
   return (decisions[c.id] && decisions[c.id].nota !== undefined) ? decisions[c.id].nota : (c.notas_gestor || '');
 }
 
+// =============================================
+// EXPORT
+// =============================================
+
 function exportJSON() {
   const updated = JSON.parse(JSON.stringify(data));
   updated.candidatos.forEach(c => {
@@ -215,26 +356,31 @@ function exportJSON() {
   const blob = new Blob([JSON.stringify(updated, null, 2)], {type:'application/json'});
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
-  a.download = 'candidates.json';
+  a.download = 'candidates_reviewed.json';
   a.click();
-  showToast('candidates.json exportado');
+  showToast('candidates_reviewed.json exportado');
 }
+
+// =============================================
+// RENDER
+// =============================================
 
 function renderStats() {
   const bar = document.getElementById('statsBar');
   const all = data.candidatos;
   const total = all.length;
-  let aprovados = 0, descartados = 0, pendentes = 0;
+  let aprovados = 0, descartados = 0, talvez = 0, pendentes = 0;
   all.forEach(c => {
     const d = getDecision(c);
     if (d === 'Aprovado') aprovados++;
     else if (d === 'Descartado') descartados++;
+    else if (d === 'Talvez') talvez++;
     else pendentes++;
   });
   bar.innerHTML = `
     <div class="stat"><div class="stat-value">${total}</div><div class="stat-label">Candidatos</div></div>
     <div class="stat green"><div class="stat-value">${aprovados}</div><div class="stat-label">Aprovados</div></div>
-    <div class="stat yellow"><div class="stat-value">${pendentes}</div><div class="stat-label">Pendentes</div></div>
+    <div class="stat yellow"><div class="stat-value">${pendentes + talvez}</div><div class="stat-label">Pendentes</div></div>
     <div class="stat red"><div class="stat-value">${descartados}</div><div class="stat-label">Descartados</div></div>
   `;
 }
@@ -245,16 +391,20 @@ function renderFilters() {
   const labels = { all: 'Todas as vagas' };
   f.innerHTML = vagas.map(v =>
     `<button class="filter-btn ${activeFilter===v?'active':''}" onclick="activeFilter='${v}';render()">${labels[v]||v} (${v==='all'?data.candidatos.length:data.candidatos.filter(c=>c.vaga===v).length})</button>`
-  ).join('') + `<button class="filter-btn" onclick="exportJSON()" style="margin-left:auto;border-color:var(--accent);color:var(--accent)">&#11015; Exportar JSON</button>`;
+  ).join('') + `<button class="filter-btn export-btn" onclick="exportJSON()">&#11015; Exportar JSON</button>`;
 }
 
 function renderCards() {
   const main = document.getElementById('main');
   const filtered = activeFilter === 'all' ? data.candidatos : data.candidatos.filter(c => c.vaga === activeFilter);
+
+  if (filtered.length === 0) {
+    main.innerHTML = '<div class="empty-state"><p>Nenhum candidato encontrado.</p></div>';
+    return;
+  }
+
   const byVaga = {};
   filtered.forEach(c => { (byVaga[c.vaga] = byVaga[c.vaga] || []).push(c); });
-
-  // Sort by score desc within each vaga
   Object.values(byVaga).forEach(arr => arr.sort((a,b) => b.score - a.score));
 
   let html = '';
@@ -271,20 +421,21 @@ function renderCard(c) {
   const dec = getDecision(c);
   const note = getNote(c);
   const decClass = dec === 'Aprovado' ? 'aprovado' : dec === 'Descartado' ? 'descartado' : dec === 'Talvez' ? 'talvez' : '';
+  const showNotes = note.length > 0;
   const hasUrl = c.linkedin_url && !c.linkedin_url.startsWith('N/A');
   const skills = (c.skills || '').split(',').map(s => s.trim()).filter(Boolean);
 
-  return `<div class="card ${decClass}" id="card-${c.id}">
+  return `<div class="card ${decClass} ${showNotes ? 'show-notes' : ''}" id="card-${c.id}">
     <div class="score ${scoreClass(c.score)}">${c.score}</div>
     <div class="card-top">
       <div class="avatar" style="background:${getAvatarColor(c.nome)}">${getInitials(c.nome)}</div>
       <div class="card-info">
         <div class="card-name">
           ${hasUrl ? `<a href="${c.linkedin_url}" target="_blank">${c.nome}</a>` : c.nome}
-          ${hasUrl ? `<a href="${c.linkedin_url}" target="_blank"><svg class="linkedin-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.3 6.5a1.78 1.78 0 01-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0013 14.19V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.36.86 3.36 3.66z"/></svg></a>` : '<span style="font-size:11px;color:var(--red)">sem URL</span>'}
+          ${hasUrl ? `<a href="${c.linkedin_url}" target="_blank" title="Ver perfil no LinkedIn"><svg class="linkedin-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.3 6.5a1.78 1.78 0 01-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0013 14.19V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.36.86 3.36 3.66z"/></svg></a>` : '<span class="no-url">sem URL</span>'}
         </div>
         <div class="card-headline" title="${c.headline}">${c.headline}</div>
-        <div class="card-empresa">${c.empresa} · ${c.localizacao}</div>
+        <div class="card-empresa">${c.empresa} &middot; ${c.localizacao}</div>
       </div>
     </div>
     <div class="card-details">
@@ -297,9 +448,9 @@ function renderCard(c) {
     <div class="justificativa">${c.justificativa}</div>
     <div class="card-actions">
       <button class="action-btn approve ${dec==='Aprovado'?'selected':''}" onclick="setDecision(${c.id},'Aprovado')">&#10003; Aprovar</button>
-      <button class="action-btn maybe ${dec==='Talvez'?'selected':''}" onclick="setDecision(${c.id},'Talvez')">&#63; Talvez</button>
+      <button class="action-btn maybe ${dec==='Talvez'?'selected':''}" onclick="setDecision(${c.id},'Talvez')">? Talvez</button>
       <button class="action-btn reject ${dec==='Descartado'?'selected':''}" onclick="setDecision(${c.id},'Descartado')">&#10005; Descartar</button>
-      <button class="action-btn" onclick="document.getElementById('card-${c.id}').classList.toggle('show-notes')" style="max-width:40px">&#9998;</button>
+      <button class="action-btn notes-toggle" onclick="document.getElementById('card-${c.id}').classList.toggle('show-notes')" title="Adicionar notas">&#9998;</button>
     </div>
     <div class="notes-row">
       <textarea class="notes-input" id="note-${c.id}" rows="2" placeholder="Notas sobre o candidato...">${note}</textarea>
@@ -314,18 +465,33 @@ function render() {
   renderCards();
 }
 
+// =============================================
+// INIT
+// =============================================
+
 async function init() {
-  loadDecisions();
+  // 1. Load candidates from static JSON
   try {
     const resp = await fetch('candidates.json');
     data = await resp.json();
   } catch(e) {
-    // Fallback: try inline data
     console.error('Erro ao carregar candidates.json:', e);
-    document.getElementById('main').innerHTML = '<p style="padding:40px;color:var(--red)">Erro ao carregar candidates.json. Verifique se o arquivo está na mesma pasta.</p>';
+    document.getElementById('main').innerHTML = '<div class="empty-state"><p style="color:var(--red)">Erro ao carregar candidates.json. Verifique se o arquivo esta na mesma pasta.</p></div>';
     return;
   }
-  document.getElementById('metaInfo').textContent = `Atualizado: ${data.meta.ultima_atualizacao}`;
+
+  // 2. Load decisions: try cloud first, fallback to localStorage
+  loadDecisionsFromLocal(); // always load local first (instant)
+  if (isJsonBinConfigured()) {
+    const cloudLoaded = await loadDecisionsFromCloud();
+    if (cloudLoaded) {
+      console.log('Decisions loaded from JSONBin');
+    }
+  }
+
+  // 3. Render
+  showSetupBanner();
+  updateSyncStatus();
   render();
 }
 
